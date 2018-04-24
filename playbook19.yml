@@ -1,0 +1,10 @@
+---
+- name: Calling other playbooks
+  hosts: 10.10.10.92
+  tasks:
+   - include:
+      playbook18.yml
+
+
+
+...

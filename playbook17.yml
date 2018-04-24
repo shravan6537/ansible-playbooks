@@ -1,0 +1,29 @@
+---
+- name: Tagging modules
+  hosts: 10.10.10.92
+  tasks:
+   - name: Installing tree
+     apt:
+      name: tree
+      state: present
+      update_cache: no
+     tags:
+      tree_installation
+   - name: Copying passwd file
+     copy:
+      src: /etc/passwd
+      dest: /tmp
+     tags:
+      copy_passwd
+   - name: User Creation
+     user:
+      name: Harish
+      password: intelliq
+
+
+
+
+
+
+
+...

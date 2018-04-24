@@ -1,0 +1,6 @@
+---
+- name: Checking url response
+  uri:
+   url: http://10.10.10.92
+   status: 200
+...

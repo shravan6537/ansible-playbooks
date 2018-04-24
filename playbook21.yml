@@ -1,0 +1,13 @@
+---
+- name: CI/CD implementation using Ansible
+  hosts: servers
+  tasks:
+   - name: Configuring dev server
+     apt:
+      name: "{{item}}"
+      state: present
+     with_items:
+      - tomcat7
+      - tomcat7-admin
+      - maven
+      - git

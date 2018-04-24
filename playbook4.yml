@@ -1,0 +1,20 @@
+---
+- name: workign on multiple hosts
+  hosts: lb
+  tasks:
+   - name: Install Tree
+     apt:
+      name: tree
+      state: present
+      update_cache: yes
+- name: Working on webserver group 
+  hosts: webserver
+  tasks:
+   - name: Creating users
+     user:
+      name: Ravi
+      password: intelliq
+
+
+
+...

@@ -1,0 +1,29 @@
+---
+- name: Configuring apache2
+  hosts: 10.10.10.92
+  tasks:
+   - name: Installing apache2
+     apt:
+      name: apache2
+      state: present
+      update_cache: yes
+   - name: Editing index.html file
+     copy:
+      content: "Intelliq home page"
+      dest: /var/www/html/index.html
+   - name: Restarting apache2
+     service:
+      name: apache2
+      state: restarted
+   - name: Checking url response
+     uri:
+      url: http://10.10.10.92
+      status: 200
+
+
+
+
+
+
+
+...

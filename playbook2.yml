@@ -1,0 +1,20 @@
+---
+- name: Creating users and capturing their info
+  hosts: all
+  tasks:
+   - name: Creating users
+     user:
+      name: Hari
+      password: intelliq
+      home: /home/vagrant/Hari
+   - name: Capturing user,home dir info
+     shell: cut -d ":" -f 1,6 /etc/passwd > userinfo
+   - name: Fetching userinfo file
+     fetch:
+      src: userinfo
+      dest: /home/vagrant
+
+
+
+
+...

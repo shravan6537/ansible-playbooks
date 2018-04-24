@@ -1,0 +1,8 @@
+---
+- name: host scope variables
+  hosts: 10.10.10.94
+  tasks:
+   - name: creating files
+     file:
+      name: "{{a}}"
+      state: "{{b}}"

@@ -1,0 +1,15 @@
+---
+- name: Installing/uninstllaing packages
+  hosts: 10.10.10.92
+  tasks:
+   - name: Install and uninstalling s/w
+     apt:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+      update_cache: "{{item.c}}"
+     with_items:
+      - {a: tree,b: present,c: yes}
+      - {a: git,b: absent,c: no}
+      - {a: apache2,b: latest,c: no}
+
+...

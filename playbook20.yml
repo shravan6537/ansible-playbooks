@@ -1,0 +1,28 @@
+---
+- name: Implementing handlers
+  hosts: 10.10.10.92
+  tasks:
+   - name: Install apache2
+     apt:
+      name: apache2
+      state: present
+     notify:
+      - url_response
+   - name: Edit index.html
+     copy:
+      content: "Welcome  to my new intelliQ"
+      dest: /var/www/html/index.html
+     notify:
+      - restart_apache2
+  handlers:
+   - name: restart_apache2
+     service:
+      name: apache2
+      state: restarted
+   - name: url_response
+     uri:
+      url: http://10.10.10.92
+      status: 200
+
+
+

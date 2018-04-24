@@ -1,0 +1,17 @@
+---
+- name: Creating dir and display the output
+  hosts: all
+  tasks:
+   - name: Creating dir
+     file:
+      name: folder_1
+      state: directory
+     register: results
+   - name: Displaying the output
+     debug:
+      var: results
+
+
+
+
+...

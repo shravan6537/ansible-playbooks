@@ -1,0 +1,17 @@
+---
+- name: Checking if a dir is present and creating file
+  hosts: all
+  tasks:
+   - name: Checking if dir is present
+     stat:
+      path: /home/vagrant/folder_1
+     register: results
+   - name: Display output of the above module
+     debug:
+      var: results
+   - name: Creating file
+     file:
+      name: /home/vagrant/folder_1/file590
+      state: touch
+     when:
+      results.stat.exists == true

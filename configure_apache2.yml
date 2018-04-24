@@ -1,0 +1,11 @@
+---
+- name: Configuring apache2
+  hosts: 10.10.10.92
+  tasks:
+   - include: "{{item}}"
+     with_items:
+      - install_apache2
+      - edit_index.html
+      - restart_apache2
+      - url_response
+...

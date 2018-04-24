@@ -1,0 +1,52 @@
+---
+- name: Creating setup for implementing ci-cd
+  hosts: servers
+  tasks:
+   - name: Install necessary s/w packages
+     apt:
+      name: "{{item.a}}"
+      state: present
+      update_cache: "{{item.b}}"
+     with_items:
+      - {a: tomcat7,b: yes}
+      - {a: tomcat7-admin,b: no}
+      - {a: default-jdk,b: no}
+      - {a: git,b: no}
+      - {a: maven,b: no}
+- name: Continous Download and Continuous Build
+  hosts: devserver
+  tasks:
+   - name: Download development code from git
+     git:
+      repo: https://github.com/selenium-saikrishna/maven.git
+      dest: /home/ubuntu/mygit
+   - name: Using maven create an artifact
+     shell: cd /home/ubuntu/mygit;mvn package
+- name: Continuous Deployment and Continuous Tesitng
+  hosts: devserver
+  tasks:
+   - name: Fetch the artifact from devserver
+     fetch:
+      src: /home/ubuntu/mygit/webapp/target/webapp.war
+      dest: /home/ubuntu
+- name: Copy the artifact into qaserver tomcat
+  hosts: qaserver
+  tasks:
+   - name: Copy the artifact
+     copy:
+      src: /home/ubuntu/172.31.22.52/home/ubuntu/mygit/webapp/target/webapp.war
+      dest: /var/lib/tomcat7/webapps/qaenv.war
+   - name: Download testing code from git
+     git:
+      repo: https://github.com/selenium-saikrishna/TestingOnAWS.git
+      dest: /home/ubuntu/testing
+   - name: execute the testing programs
+     shell: java -jar /home/ubuntu/testing/testing.jar
+- name: Deploy to prod server
+  hosts: prodserver
+  tasks:
+   - name: Copy the artifact into prodserver
+     copy:
+      src: /home/ubuntu/172.31.22.52/home/ubuntu/mygit/webapp/target/webapp.war
+      dest: /var/lib/tomcat7/webapps/prodenv.war
+
